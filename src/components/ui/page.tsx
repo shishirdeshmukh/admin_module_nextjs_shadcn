@@ -1,10 +1,8 @@
-
-import BarChart from "@/components/ui/BarChart";
-import Card, { CardContent, CardProps } from "@/components/ui/card";
-import PageTitle from "@/components/ui/PageTitle";
-import SalesCard, { SalesProps } from "@/components/ui/SalesCard";
+import BarChart from "@/components/BarChart";
+import PageTitle from "@/components/PageTitle";
+import Card, { CardContent, CardProps } from "@/components/card";
 import { Activity, CreditCard, DollarSign, Users } from "lucide-react";
-
+import SalesCard, { SalesProps } from "@/components/SalesCard";
 
 const cardData: CardProps[] = [
   {
@@ -80,7 +78,7 @@ export default function Home() {
       <section className="grid grid-cols-1 gap-4 transition-all lg:grid-cols-2">
         <CardContent>
           <p className="p-4 font-semibold">Overview</p>
-          <BarChart />
+          <BarChart/>
         </CardContent>
         <CardContent className="flex justify-between gap-4">
           <section>

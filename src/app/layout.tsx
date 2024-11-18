@@ -1,16 +1,20 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
+import { Inter as FontSans } from "next/font/google";
 import "./globals.css";
+import { cn } from "@/lib/utils";
+import { ThemeProvider } from "@/components/ui/theme-provider";
+import { AppSidebar } from "@/components/app-sidebar";
+import { ModeToggle } from "@/components/ui/mode-toggle";
+import { Separator } from "@/components/ui/separator";
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from "@/components/ui/sidebar";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
+const fontSans = FontSans({
+  subsets: ["latin"],
+  variable: "--font-sans",
 });
 
 export const metadata: Metadata = {
@@ -24,11 +28,34 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={cn(
+          "min-h-screen bg-background font-sans antialiased",
+          fontSans.variable
+        )}
       >
-        {children}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          forcedTheme={undefined}
+          disableTransitionOnChange
+        >
+          <SidebarProvider>
+            <AppSidebar />
+            <SidebarInset>
+              <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
+                <SidebarTrigger className="-ml-1" />
+                <Separator orientation="vertical" className="mr-2 h-4" />
+                <div className="ml-auto">
+                  <ModeToggle />
+                </div>
+              </header>
+              <div className="flex flex-1 flex-col gap-4 p-4">{children}</div>
+            </SidebarInset>
+          </SidebarProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
